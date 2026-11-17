@@ -1,0 +1,1534 @@
+<!DOCTYPE html><html><head><base target="_top"><meta charset="utf-8">
+<style>html,body{margin:0;-webkit-text-size-adjust:100%}*,*::before,*::after{box-sizing:border-box}[hidden]{display:none!important}</style></head><body>
+<title>英検 口頭カード</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Nunito:wght@600;800;900&display=swap">
+<style>
+/* Layout: one column of rounded "strawberry milk" cards on a polka-dot ground; quiz card held by the parent */
+:root{
+  --bg:#fff0f5; --dot:#ffdbe8; --paper:#ffffff; --ink:#4a2236; --sub:#9a6b80; --line:#f6cfe0;
+  --accent:#ec5f97; --accent-deep:#d4417e; --accent-ink:#ffffff; --soft:#ffe3ee;
+  --ok:#2a9d6f; --mid:#e0951a; --ng:#6b7bd6; --hana:#e8457a; --gold:#f2b531;
+  --ja:"Zen Maru Gothic","Hiragino Maru Gothic ProN","Hiragino Sans",sans-serif;
+  --en:"Nunito","Helvetica Neue",Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#26131e; --dot:#331a29; --paper:#371d2c; --ink:#fbe9f0; --sub:#cf9fb5; --line:#55304a;
+  --accent:#ff8fb8; --accent-deep:#ff6fa3; --accent-ink:#2a0f1d; --soft:#4a2539;
+  --ok:#5fd39c; --mid:#f2b75a; --ng:#9eaaf5; --hana:#ff7fa8; --gold:#f7cc5e; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#26131e; --dot:#331a29; --paper:#371d2c; --ink:#fbe9f0; --sub:#cf9fb5; --line:#55304a;
+  --accent:#ff8fb8; --accent-deep:#ff6fa3; --accent-ink:#2a0f1d; --soft:#4a2539;
+  --ok:#5fd39c; --mid:#f2b75a; --ng:#9eaaf5; --hana:#ff7fa8; --gold:#f7cc5e; color-scheme:dark}
+html,body{background:var(--bg);color:var(--ink)}
+body{font-family:var(--ja);font-size:16px;line-height:1.6;min-height:100%;
+  background-image:radial-gradient(var(--dot) 2.5px,transparent 3px);background-size:26px 26px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:16px 40px}
+.wrap{max-width:520px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+h1{font-size:24px;font-weight:900;margin:0;letter-spacing:.02em;text-wrap:balance;color:var(--accent-deep)}
+h1 .ribbon{display:inline-block;transform:translateY(-1px)}
+h2{font-size:18px;font-weight:900;margin:0}
+.lead{color:var(--sub);font-size:14px;margin:4px 0 0}
+.card{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:20px;position:relative;box-shadow:0 4px 0 var(--line)}
+.label{font-size:12px;color:var(--sub);letter-spacing:.08em;font-weight:900}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.seg.two{grid-template-columns:repeat(2,1fr)}
+.seg.four{grid-template-columns:repeat(4,1fr)}
+.seg button{font:inherit;font-weight:900;padding:11px 4px;border-radius:16px;border:2px solid var(--line);background:var(--paper);color:var(--ink);cursor:pointer;line-height:1.3}
+.seg button small{display:block;font-weight:500;font-size:11px;color:var(--sub)}
+.seg button[aria-pressed="true"]{border-color:var(--accent);background:var(--soft);color:var(--accent-deep)}
+.group{display:flex;flex-direction:column;gap:8px}
+.btn{font:inherit;font-weight:900;font-size:18px;border:none;border-radius:999px;padding:16px;cursor:pointer;width:100%;background:var(--accent);color:var(--accent-ink);box-shadow:0 5px 0 var(--accent-deep);transition:transform .08s,box-shadow .08s}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 var(--accent-deep)}
+.btn.ghost{background:var(--paper);color:var(--accent-deep);border:2px solid var(--accent);box-shadow:0 4px 0 var(--line)}
+.btn:disabled{opacity:.4;cursor:default}
+button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.back{font:inherit;font-size:14px;font-weight:700;background:none;border:none;color:var(--sub);cursor:pointer;padding:6px 0}
+.pill{font:inherit;font-weight:900;font-size:14px;border:2px solid var(--accent);background:var(--paper);color:var(--accent-deep);border-radius:999px;padding:7px 14px;cursor:pointer;white-space:nowrap}
+.status{display:flex;gap:8px;flex-wrap:wrap}
+.status span{background:var(--paper);border:2px solid var(--line);border-radius:999px;padding:4px 12px;font-size:13px;font-weight:900;color:var(--accent-deep)}
+.status b{font-family:var(--en);font-size:16px}
+.prog{font-family:var(--en);font-weight:900;font-variant-numeric:tabular-nums;color:var(--sub)}
+.bar{height:10px;border-radius:5px;background:var(--paper);border:2px solid var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:5px;transition:width .3s}
+.tagline{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:12px;font-weight:900;padding:2px 10px;border-radius:999px;background:var(--soft);color:var(--accent-deep)}
+.say{font-size:13px;color:var(--sub);margin:14px 0 4px}
+.ja{font-size:24px;font-weight:700;line-height:1.55;margin:0;overflow-wrap:anywhere}
+.en{font-family:var(--en);font-size:24px;font-weight:900;line-height:1.4;margin:0;overflow-wrap:anywhere}
+.answer{border-top:3px dotted var(--line);margin-top:18px;padding-top:14px;display:flex;flex-direction:column;gap:8px}
+.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.spk{display:inline-flex;align-items:center;gap:6px;font:inherit;font-weight:900;font-size:14px;padding:9px 14px;border-radius:999px;border:2px solid var(--accent);background:var(--paper);color:var(--accent-deep);cursor:pointer}
+.spk svg{width:18px;height:18px}
+.spk.big{font-size:18px;padding:16px 22px;background:var(--accent);color:var(--accent-ink);border:none;box-shadow:0 4px 0 var(--accent-deep)}
+.judge{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.judge button{font:inherit;font-weight:900;border-radius:22px;padding:12px 4px;cursor:pointer;background:var(--paper);border:3px solid currentColor;line-height:1.2;box-shadow:0 4px 0 currentColor}
+.judge button:active{transform:translateY(3px);box-shadow:0 1px 0 currentColor}
+.judge button b{display:block;font-size:34px}
+.judge button span{font-size:13px}
+.j-ok{color:var(--ok)} .j-mid{color:var(--mid)} .j-ng{color:var(--ng)}
+.hint{font-size:13px;color:var(--sub);margin:0}
+.combo{color:var(--accent-deep);font-weight:900;font-size:14px;text-align:right;min-height:1.4em;margin:0}
+.score{font-family:var(--en);font-size:60px;font-weight:900;line-height:1;margin:4px 0;font-variant-numeric:tabular-nums;color:var(--accent-deep)}
+.score small{font-size:22px;color:var(--sub)}
+.praise{font-size:26px;font-weight:900;color:var(--hana);margin:0}
+.hana{display:block;margin:0 auto}
+.list{display:flex;flex-direction:column;gap:10px;margin:0;padding:0;list-style:none}
+.list li{border:2px solid var(--line);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.list .m{font-weight:900;margin-right:4px}
+.list .e{font-family:var(--en);font-weight:900}
+.list .meta{font-size:12px;color:var(--sub);display:flex;gap:10px;flex-wrap:wrap}
+.note{font-size:12px;color:var(--sub);margin:0}
+/* sticker */
+.sticker{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font-size:34px;background:var(--soft);border:3px solid var(--paper);box-shadow:0 0 0 2px var(--line);line-height:1}
+.sticker.rare{background:radial-gradient(circle at 30% 30%,#fff7d6,var(--gold));box-shadow:0 0 0 2px var(--gold),0 0 14px var(--gold)}
+.sticker.empty{background:transparent;border:2px dashed var(--line);box-shadow:none}
+.sticker.big{width:110px;height:110px;font-size:60px;margin:0 auto;animation:pop .6s cubic-bezier(.3,1.6,.5,1)}
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:12px;justify-items:center}
+/* calendar */
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
+.cal .wd{font-size:11px;font-weight:900;color:var(--sub)}
+.cal .d{position:relative;aspect-ratio:1;max-width:100%;border-radius:12px;display:grid;place-items:center;font-family:var(--en);font-weight:800;font-size:13px;color:var(--sub)}
+.cal .d.has{color:var(--ink)}
+.cal .d.today{background:var(--soft)}
+.cal .d svg{position:absolute;inset:2px;width:calc(100% - 4px);height:calc(100% - 4px)}
+.cal .d span{position:relative}
+.cal .d.has span{position:absolute;top:0;left:3px;font-size:10px;color:var(--sub)}
+.cal .d.has svg{inset:6px 1px 0 3px;width:calc(100% - 4px);height:calc(100% - 6px)}
+.seg.four button{font-size:13px;padding:10px 2px;white-space:nowrap}
+.big-num{display:flex;gap:10px}
+.big-num div{flex:1;background:var(--soft);border-radius:18px;padding:10px;text-align:center}
+.big-num b{display:block;font-family:var(--en);font-size:30px;font-weight:900;color:var(--accent-deep);line-height:1.1;font-variant-numeric:tabular-nums}
+.big-num span{font-size:12px;font-weight:900;color:var(--sub)}
+/* chart + table */
+.chart{width:100%;height:auto;display:block}
+.acc{width:100%;border-collapse:collapse;font-size:14px}
+.acc td{padding:7px 4px;border-bottom:2px dotted var(--line)}
+.acc td:last-child{text-align:right;font-family:var(--en);font-weight:900;font-variant-numeric:tabular-nums;white-space:nowrap}
+.meter{height:8px;border-radius:4px;background:var(--soft);overflow:hidden;margin-top:4px}
+.meter i{display:block;height:100%;background:var(--accent)}
+/* effects */
+.pt{position:fixed;pointer-events:none;z-index:50;font-size:22px;color:var(--accent);animation:fly .9s ease-out forwards}
+@keyframes fly{to{transform:translate(var(--dx),var(--dy)) scale(.4) rotate(var(--r));opacity:0}}
+.toast{position:fixed;left:50%;top:30%;z-index:60;transform:translate(-50%,-50%);pointer-events:none;
+  font-size:34px;font-weight:900;color:var(--accent-ink);background:var(--accent);padding:12px 26px;border-radius:999px;
+  box-shadow:0 6px 0 var(--accent-deep);white-space:nowrap;animation:toast 1.2s ease-out forwards}
+@keyframes toast{0%{transform:translate(-50%,-50%) scale(.4);opacity:0}20%{transform:translate(-50%,-50%) scale(1.1);opacity:1}35%{transform:translate(-50%,-50%) scale(1)}80%{opacity:1}100%{transform:translate(-50%,-70%);opacity:0}}
+@keyframes pop{0%{transform:scale(.2) rotate(-20deg)}100%{transform:scale(1) rotate(0)}}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}.sticker.big,.toast{animation:none}.toast{opacity:1}}
+</style>
+
+<div class="wrap" id="app"></div>
+
+<script>
+const SPK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19 6a8.5 8.5 0 0 1 0 12"/></svg>';
+const S5_1=[
+["私はリンゴが好きです。","I like apples."],
+["これは私のペンです。","This is my pen."],
+["彼は私の兄です。","He is my brother."],
+["私の父は先生です。","My father is a teacher."],
+["冬は寒いです。","It is cold in winter."],
+["私の好きな食べ物はカレーです。","My favorite food is curry."],
+["そのリンゴはおいしいです。","The apple is delicious."],
+["私はねこが好きです。","I like cats."],
+["あれは私の学校です。","That is my school."],
+["私は11歳です。","I am eleven years old."],
+["私は東京に住んでいます。","I live in Tokyo."],
+["この本はおもしろいです。","This book is interesting."],
+["私たちは友だちです。","We are friends."],
+["彼女は私の姉です。","She is my sister."],
+["今日は晴れです。","It is sunny today."],
+["私はサッカーをします。","I play soccer."],
+["私は英語を勉強します。","I study English."],
+["あなたは背が高いです。","You are tall."],
+["その犬は大きいです。","The dog is big."],
+["これは青いかさです。","This is a blue umbrella."],
+["私はおなかがすいています。","I am hungry."],
+["私は牛にゅうを飲みます。","I drink milk."],
+["彼はサッカー選手です。","He is a soccer player."],
+["私は音楽が好きです。","I like music."],
+["あれは私の自転車です。","That is my bike."],
+["彼女は親切です。","She is kind."],
+["私はうれしいです。","I am happy."],
+["私の部屋は小さいです。","My room is small."],
+["私たちは日本人です。","We are Japanese."],
+["このケーキはあまいです。","This cake is sweet."],
+["私は朝ごはんを食べます。","I eat breakfast."],
+["彼はバスケットボールが好きです。","He likes basketball."],
+["私の母はテニスをします。","My mother plays tennis."],
+["これは私のノートです。","This is my notebook."],
+["私は犬を2ひき飼っています。","I have two dogs."],
+["あなたは私の友だちです。","You are my friend."],
+["今日は月曜日です。","Today is Monday."],
+["夏は暑いです。","It is hot in summer."],
+["私の好きな色は青です。","My favorite color is blue."],
+["私は算数が好きです。","I like math."],
+["私の兄は大学生です。","My brother is a college student."],
+["私はオレンジジュースが好きです。","I like orange juice."],
+["私の家は大きいです。","My house is big."],
+["その花はきれいです。","The flower is beautiful."],
+["私はつかれています。","I am tired."],
+["彼女は歌手です。","She is a singer."],
+["私はギターをひきます。","I play the guitar."],
+["あの男の人は私のおじです。","That man is my uncle."],
+["私たちは学校へ行きます。","We go to school."],
+["彼は私の先生です。","He is my teacher."]
+];
+const S5_2=[
+["私は泳げません。","I can't swim."],
+["私はピアノをひくことができます。","I can play the piano."],
+["窓を開けてください。","Please open the window."],
+["いっしょに昼ごはんを食べましょう。","Let's eat lunch together."],
+["彼女はテニスをしています。","She is playing tennis."],
+["彼は野球が好きではありません。","He doesn't like baseball."],
+["私は毎朝7時に起きます。","I get up at seven every morning."],
+["私はコーヒーを飲みません。","I don't drink coffee."],
+["これは私のかばんではありません。","This is not my bag."],
+["彼はとても速く走ることができます。","He can run very fast."],
+["教室で走ってはいけません。","Don't run in the classroom."],
+["公園でサッカーをしましょう。","Let's play soccer in the park."],
+["私の兄は毎日テレビを見ます。","My brother watches TV every day."],
+["私はバスで学校へ行きます。","I go to school by bus."],
+["母は台所で料理をしています。","My mother is cooking in the kitchen."],
+["私の父は車を運転することができます。","My father can drive a car."],
+["ドアを閉めてください。","Please close the door."],
+["私たちは毎週日曜日にテニスをします。","We play tennis every Sunday."],
+["彼女は英語を話すことができます。","She can speak English."],
+["私はにんじんが好きではありません。","I don't like carrots."],
+["今日は寒くありません。","It isn't cold today."],
+["私の姉は図書館で本を読んでいます。","My sister is reading a book in the library."],
+["彼は日本語を読むことができません。","He can't read Japanese."],
+["黒板を見てください。","Please look at the blackboard."],
+["いっしょに歌を歌いましょう。","Let's sing a song together."],
+["ケンは毎晩おふろに入ります。","Ken takes a bath every night."],
+["私は夕食の後に宿題をします。","I do my homework after dinner."],
+["彼らは体育館でバスケットボールをしています。","They are playing basketball in the gym."],
+["彼女は朝ごはんを食べません。","She doesn't eat breakfast."],
+["私の弟は自転車に乗ることができます。","My brother can ride a bike."],
+["ここで写真をとってはいけません。","Don't take pictures here."],
+["私は今、手紙を書いています。","I am writing a letter now."],
+["アキは毎週土曜日にピアノを練習します。","Aki practices the piano every Saturday."],
+["私の祖母は京都に住んでいます。","My grandmother lives in Kyoto."],
+["学校におくれてはいけません。","Don't be late for school."],
+["海で泳ぎましょう。","Let's swim in the sea."],
+["彼は電車で東京へ行きます。","He goes to Tokyo by train."],
+["私たちは学校で英語を勉強します。","We study English at school."],
+["そのねこは黒くありません。","The cat isn't black."],
+["私は10時にねます。","I go to bed at ten."],
+["私の父は日曜日には働きません。","My father doesn't work on Sundays."],
+["あなたはじょうずに歌うことができます。","You can sing well."],
+["子どもたちは公園で遊んでいます。","The children are playing in the park."],
+["夕食の前に手を洗いなさい。","Wash your hands before dinner."],
+["ユミはピアノをじょうずにひきます。","Yumi plays the piano well."],
+["私は速く走れません。","I can't run fast."],
+["私の部屋に来てください。","Please come to my room."],
+["私たちは今、昼ごはんを食べています。","We are eating lunch now."],
+["ボブは毎朝牛にゅうを飲みます。","Bob drinks milk every morning."],
+["私の家は駅の近くにあります。","My house is near the station."]
+];
+const S5_3=[
+["あなたは学生ですか。","Are you a student?"],
+["あなたは何色が好きですか。","What color do you like?"],
+["今日は何曜日ですか。","What day is it today?"],
+["あなたは何歳ですか。","How old are you?"],
+["今、何時ですか。","What time is it now?"],
+["あなたはどこに住んでいますか。","Where do you live?"],
+["これはだれのかばんですか。","Whose bag is this?"],
+["あなたは犬が好きですか。","Do you like dogs?"],
+["彼はサッカーをしますか。","Does he play soccer?"],
+["あなたは泳ぐことができますか。","Can you swim?"],
+["彼女は本を読んでいますか。","Is she reading a book?"],
+["あなたは何時に起きますか。","What time do you get up?"],
+["あなたのたん生日はいつですか。","When is your birthday?"],
+["あの男の人はだれですか。","Who is that man?"],
+["あなたはねこを何びき飼っていますか。","How many cats do you have?"],
+["このTシャツはいくらですか。","How much is this T-shirt?"],
+["あなたはどうやって学校へ行きますか。","How do you go to school?"],
+["あなたはリンゴとバナナのどちらが好きですか。","Which do you like, apples or bananas?"],
+["これは何ですか。","What is this?"],
+["あなたはピアノをひきますか。","Do you play the piano?"],
+["あなたのお父さんは先生ですか。","Is your father a teacher?"],
+["あなたのお姉さんはテニスができますか。","Can your sister play tennis?"],
+["あなたは何のスポーツが好きですか。","What sport do you like?"],
+["あなたのかばんはどこですか。","Where is your bag?"],
+["あなたはいつ宿題をしますか。","When do you do your homework?"],
+["あなたは今、何をしていますか。","What are you doing now?"],
+["これはあなたのペンですか。","Is this your pen?"],
+["あなたは毎日英語を勉強しますか。","Do you study English every day?"],
+["あなたの好きな食べ物は何ですか。","What is your favorite food?"],
+["そのねこはどこにいますか。","Where is the cat?"],
+["あなたのお母さんは料理が好きですか。","Does your mother like cooking?"],
+["あなたは英語を話せますか。","Can you speak English?"],
+["彼らは公園で遊んでいますか。","Are they playing in the park?"],
+["今日の天気はどうですか。","How is the weather today?"],
+["あなたはペンを何本持っていますか。","How many pens do you have?"],
+["あれはだれのくつですか。","Whose shoes are those?"],
+["彼は何時にねますか。","What time does he go to bed?"],
+["あなたはどの季節が好きですか。","Which season do you like?"],
+["あなたは日曜日には何をしますか。","What do you do on Sundays?"],
+["あなたはおなかがすいていますか。","Are you hungry?"],
+["あの女の人はあなたのお母さんですか。","Is that woman your mother?"],
+["あなたのお兄さんは何歳ですか。","How old is your brother?"],
+["あなたの学校はどこにありますか。","Where is your school?"],
+["ケンはギターをひいていますか。","Is Ken playing the guitar?"],
+["あなたはどこで昼ごはんを食べますか。","Where do you eat lunch?"],
+["彼女はどこの出身ですか。","Where is she from?"],
+["あなたの英語の先生はだれですか。","Who is your English teacher?"],
+["あなたのお父さんは車を運転できますか。","Can your father drive a car?"],
+["ユミは朝ごはんを食べますか。","Does Yumi eat breakfast?"],
+["今日は何月何日ですか。","What is the date today?"]
+];
+const S4_1=[
+["私は昨日、テニスをしました。","I played tennis yesterday."],
+["私は昨日、おばあちゃんの家に行きました。","I visited my grandmother yesterday."],
+["明日は雨がふるでしょう。","It will rain tomorrow."],
+["公園には子どもがたくさんいます。","There are many children in the park."],
+["私たちは来年、オーストラリアに行く予定です。","We are going to visit Australia next year."],
+["私は昨日の夜、テレビを見ました。","I watched TV last night."],
+["私の母は今朝、ケーキを作りました。","My mother made a cake this morning."],
+["私たちは先週、海に行きました。","We went to the sea last week."],
+["私は昨日、本を読みました。","I read a book yesterday."],
+["彼は昨日、とてもつかれていました。","He was very tired yesterday."],
+["昨日はとても寒かったです。","It was very cold yesterday."],
+["私たちは昨日、いそがしかったです。","We were busy yesterday."],
+["私は今朝、6時に起きました。","I got up at six this morning."],
+["私の父は新しい車を買いました。","My father bought a new car."],
+["私は駅でケンに会いました。","I met Ken at the station."],
+["私の姉は手紙を書きました。","My sister wrote a letter."],
+["私は先週、かぜをひきました。","I caught a cold last week."],
+["明日は晴れるでしょう。","It will be sunny tomorrow."],
+["私は明日、彼に電話します。","I will call him tomorrow."],
+["私の兄は来月、20才になります。","My brother will be twenty next month."],
+["私は夕食を作るつもりです。","I am going to cook dinner."],
+["彼らは明日、サッカーをする予定です。","They are going to play soccer tomorrow."],
+["私の机の上に本が1さつあります。","There is a book on my desk."],
+["私の町には図書館があります。","There is a library in my town."],
+["箱の中にねこが2ひきいます。","There are two cats in the box."],
+["私はそのとき、ピアノをひいていました。","I was playing the piano then."],
+["私たちはそのとき、昼ごはんを食べていました。","We were eating lunch then."],
+["母はそのとき、料理をしていました。","My mother was cooking then."],
+["子どもたちは公園で走っていました。","The children were running in the park."],
+["私は10時に宿題をしていました。","I was doing my homework at ten."],
+["昨日は雪がふっていました。","It was snowing yesterday."],
+["私はスーパーで牛にゅうを買いました。","I bought milk at the supermarket."],
+["私たちは昨日、川で泳ぎました。","We swam in the river yesterday."],
+["彼女は昨日、家にいました。","She was at home yesterday."],
+["そのテストはかんたんでした。","The test was easy."],
+["その映画はおもしろかったです。","The movie was interesting."],
+["私はそのとき、おなかがすいていました。","I was hungry then."],
+["私は先月、京都へ行きました。","I went to Kyoto last month."],
+["私たちは昨日、野球の試合を見ました。","We watched a baseball game yesterday."],
+["私の弟は自転車をなくしました。","My brother lost his bike."],
+["私は昨日、友だちとサッカーをしました。","I played soccer with my friends yesterday."],
+["私はバスで学校に来ました。","I came to school by bus."],
+["私は明日、早く起きます。","I will get up early tomorrow."],
+["明日はくもりでしょう。","It will be cloudy tomorrow."],
+["私は明日、泳ぐつもりです。","I am going to swim tomorrow."],
+["れいぞうこに卵が6こあります。","There are six eggs in the fridge."],
+["彼はそのとき、ねていました。","He was sleeping then."],
+["私は昨日、にじを見ました。","I saw a rainbow yesterday."],
+["私たちは去年、北海道へ行きました。","We went to Hokkaido last year."],
+["私はそのとき、図書館で勉強していました。","I was studying in the library then."]
+];
+const S4_2=[
+["私は将来、医者になりたいです。","I want to be a doctor in the future."],
+["富士山は日本で一番高い山です。","Mt. Fuji is the highest mountain in Japan."],
+["私の兄は私より背が高いです。","My brother is taller than me."],
+["私は宿題をしなければなりません。","I have to do my homework."],
+["私はテニスをするのが得意です。","I am good at playing tennis."],
+["私はかぜをひいていたので、学校を休みました。","I was absent from school because I had a cold."],
+["私は昨日、学校に行きませんでした。","I didn't go to school yesterday."],
+["彼は今朝、朝ごはんを食べませんでした。","He didn't eat breakfast this morning."],
+["昨日は暑くありませんでした。","It wasn't hot yesterday."],
+["私たちは昨日、家にいませんでした。","We weren't at home yesterday."],
+["明日は雨はふらないでしょう。","It won't rain tomorrow."],
+["彼は明日のパーティーに来ないでしょう。","He won't come to the party tomorrow."],
+["この本はあの本よりおもしろいです。","This book is more interesting than that one."],
+["私の犬はあなたの犬より大きいです。","My dog is bigger than yours."],
+["ケンはクラスで一番速く走ります。","Ken runs the fastest in his class."],
+["これはこの店で一番人気のあるケーキです。","This is the most popular cake in this store."],
+["私の部屋はあなたの部屋と同じくらいの大きさです。","My room is as big as yours."],
+["私は数学より理科のほうが好きです。","I like science better than math."],
+["私は春が一番好きです。","I like spring the best."],
+["私は英語を勉強するために図書館に行きました。","I went to the library to study English."],
+["私は新しいくつを買いたいです。","I want to buy new shoes."],
+["私の妹は歌手になりたいと思っています。","My sister wants to be a singer."],
+["私は何か食べる物がほしいです。","I want something to eat."],
+["私は本を読むのが好きです。","I like reading books."],
+["私たちは去年の夏、キャンプを楽しみました。","We enjoyed camping last summer."],
+["彼は絵をかくのが上手です。","He is good at drawing pictures."],
+["雨がやみました。","It stopped raining."],
+["私は昨日の夜、手紙を書き終えました。","I finished writing the letter last night."],
+["私の母は料理をするのが好きです。","My mother likes cooking."],
+["あなたは今日、早くねなければなりません。","You must go to bed early today."],
+["ここで写真をとってはいけません。","You must not take pictures here."],
+["私たちは明日、6時に起きなければなりません。","We have to get up at six tomorrow."],
+["あなたはもっと野菜を食べるべきです。","You should eat more vegetables."],
+["図書館では静かにしなければなりません。","You must be quiet in the library."],
+["彼は昨日、病院に行かなければなりませんでした。","He had to go to the hospital yesterday."],
+["私が家に帰ったとき、母はねていました。","My mother was sleeping when I came home."],
+["明日晴れたら、テニスをしましょう。","If it is sunny tomorrow, let's play tennis."],
+["私は夕食を食べた後、テレビを見ました。","I watched TV after I ate dinner."],
+["私は学校に行く前に、犬の散歩をします。","I walk my dog before I go to school."],
+["私はおなかがすいていたので、たくさん食べました。","I ate a lot because I was hungry."],
+["私が電話したとき、ケンは勉強していました。","Ken was studying when I called him."],
+["ひまなら、私の家に来てください。","If you are free, please come to my house."],
+["彼女は昨日、宿題をしませんでした。","She didn't do her homework yesterday."],
+["その店は昨日、開いていませんでした。","The store wasn't open yesterday."],
+["この問題はあの問題よりむずかしいです。","This question is more difficult than that one."],
+["信濃川は日本で一番長い川です。","The Shinano River is the longest river in Japan."],
+["私の妹は私より早く起きます。","My sister gets up earlier than me."],
+["私は毎日ピアノを練習しなければなりません。","I have to practice the piano every day."],
+["私たちは駅でケンに会えてうれしかったです。","We were happy to see Ken at the station."],
+["私はいつかカナダに行きたいです。","I want to go to Canada someday."]
+];
+const S4_3=[
+["窓を開けてもいいですか。","May I open the window?"],
+["何か飲み物はいかがですか。","Would you like something to drink?"],
+["あなたは先週末、何をしましたか。","What did you do last weekend?"],
+["夏と冬では、どちらが好きですか。","Which do you like better, summer or winter?"],
+["駅への道を教えてくれませんか。","Could you tell me the way to the station?"],
+["あなたの夏休みはどうでしたか。","How was your summer vacation?"],
+["あなたは昨日、サッカーをしましたか。","Did you play soccer yesterday?"],
+["あなたは今朝、何を食べましたか。","What did you eat this morning?"],
+["あなたはこの前の日曜日、どこへ行きましたか。","Where did you go last Sunday?"],
+["あなたは今朝、何時に起きましたか。","What time did you get up this morning?"],
+["あなたはだれとそこへ行きましたか。","Who did you go there with?"],
+["あなたはどうやってここに来ましたか。","How did you come here?"],
+["あなたのお兄さんは昨日、家にいましたか。","Was your brother at home yesterday?"],
+["昨日は寒かったですか。","Was it cold yesterday?"],
+["あなたはそのとき、何をしていましたか。","What were you doing then?"],
+["明日は雨がふるでしょうか。","Will it rain tomorrow?"],
+["あなたは今週末、何をする予定ですか。","What are you going to do this weekend?"],
+["あなたは明日、図書館に行く予定ですか。","Are you going to go to the library tomorrow?"],
+["あなたはどのくらい日本にいる予定ですか。","How long are you going to stay in Japan?"],
+["犬とねこでは、どちらが好きですか。","Which do you like better, dogs or cats?"],
+["あなたはどの季節が一番好きですか。","Which season do you like the best?"],
+["駅から学校までどのくらい遠いですか。","How far is it from the station to the school?"],
+["あなたはどのくらいテニスをしましたか。","How long did you play tennis?"],
+["あなたはなぜ昨日、学校を休んだのですか。","Why were you absent from school yesterday?"],
+["あなたはなぜ英語を勉強するのですか。","Why do you study English?"],
+["窓を閉めてくれますか。","Can you close the window?"],
+["宿題を手伝ってくれませんか。","Could you help me with my homework?"],
+["この本を借りてもいいですか。","May I borrow this book?"],
+["あなたの電話を使ってもいいですか。","May I use your phone?"],
+["お茶をもう1ぱいいかがですか。","Would you like another cup of tea?"],
+["ドアを開けましょうか。","Shall I open the door?"],
+["いっしょに昼ごはんを食べましょうか。","Shall we eat lunch together?"],
+["何時に会いましょうか。","What time shall we meet?"],
+["私といっしょに来てくれますか。","Can you come with me?"],
+["あなたは将来、何になりたいですか。","What do you want to be in the future?"],
+["あなたは昨日の夜、何時にねましたか。","What time did you go to bed last night?"],
+["あなたはその店で何を買いましたか。","What did you buy at the store?"],
+["彼女はそのパーティーに来ましたか。","Did she come to the party?"],
+["その試合はわくわくしましたか。","Was the game exciting?"],
+["あなたは来月、京都を訪れる予定ですか。","Are you going to visit Kyoto next month?"],
+["あなたは昨日、ピアノを練習しましたか。","Did you practice the piano yesterday?"],
+["あなたのお母さんは夕食に何を作りましたか。","What did your mother make for dinner?"],
+["あなたはどこでそのかばんを買いましたか。","Where did you buy that bag?"],
+["あなたはそのとき、どこにいましたか。","Where were you then?"],
+["ケンはそのとき、ねていましたか。","Was Ken sleeping then?"],
+["その数学のテストはむずかしかったですか。","Was the math test difficult?"],
+["塩をとってくれませんか。","Could you pass me the salt?"],
+["もっとゆっくり話してくれませんか。","Could you speak more slowly?"],
+["あなたは東京にどのくらいいましたか。","How long did you stay in Tokyo?"],
+["太陽と月では、どちらが大きいですか。","Which is bigger, the sun or the moon?"]
+];
+const W5=[
+["one","1","数"],
+["two","2","数"],
+["three","3","数"],
+["four","4","数"],
+["five","5","数"],
+["six","6","数"],
+["seven","7","数"],
+["eight","8","数"],
+["nine","9","数"],
+["ten","10","数"],
+["eleven","11","数"],
+["twelve","12","数"],
+["thirteen","13","数"],
+["fourteen","14","数"],
+["fifteen","15","数"],
+["sixteen","16","数"],
+["seventeen","17","数"],
+["eighteen","18","数"],
+["nineteen","19","数"],
+["twenty","20","数"],
+["thirty","30","数"],
+["forty","40","数"],
+["fifty","50","数"],
+["sixty","60","数"],
+["seventy","70","数"],
+["eighty","80","数"],
+["ninety","90","数"],
+["hundred","100","数"],
+["Sunday","日曜日","時・曜日・月"],
+["Monday","月曜日","時・曜日・月"],
+["Tuesday","火曜日","時・曜日・月"],
+["Wednesday","水曜日","時・曜日・月"],
+["Thursday","木曜日","時・曜日・月"],
+["Friday","金曜日","時・曜日・月"],
+["Saturday","土曜日","時・曜日・月"],
+["January","1月","時・曜日・月"],
+["February","2月","時・曜日・月"],
+["March","3月","時・曜日・月"],
+["April","4月","時・曜日・月"],
+["May","5月","時・曜日・月"],
+["June","6月","時・曜日・月"],
+["July","7月","時・曜日・月"],
+["August","8月","時・曜日・月"],
+["September","9月","時・曜日・月"],
+["October","10月","時・曜日・月"],
+["November","11月","時・曜日・月"],
+["December","12月","時・曜日・月"],
+["day","日","時・曜日・月"],
+["week","週","時・曜日・月"],
+["month","1か月","時・曜日・月"],
+["year","年","時・曜日・月"],
+["morning","朝","時・曜日・月"],
+["afternoon","午後","時・曜日・月"],
+["evening","夕方","時・曜日・月"],
+["night","夜","時・曜日・月"],
+["today","今日","時・曜日・月"],
+["tomorrow","明日","時・曜日・月"],
+["now","今","時・曜日・月"],
+["time","時間","時・曜日・月"],
+["o'clock","～時","時・曜日・月"],
+["spring","春","時・曜日・月"],
+["summer","夏","時・曜日・月"],
+["fall","秋","時・曜日・月"],
+["winter","冬","時・曜日・月"],
+["birthday","誕生日","時・曜日・月"],
+["color","色","色"],
+["red","赤","色"],
+["blue","青","色"],
+["yellow","黄色","色"],
+["green","緑","色"],
+["white","白","色"],
+["black","黒","色"],
+["pink","ピンク","色"],
+["brown","茶色","色"],
+["purple","むらさき","色"],
+["family","家族","家族・人"],
+["father","父","家族・人"],
+["mother","母","家族・人"],
+["brother","兄弟","家族・人"],
+["sister","姉妹","家族・人"],
+["grandfather","おじいさん","家族・人"],
+["grandmother","おばあさん","家族・人"],
+["friend","友だち","家族・人"],
+["boy","男の子","家族・人"],
+["girl","女の子","家族・人"],
+["man","男の人","家族・人"],
+["woman","女の人","家族・人"],
+["child","子ども","家族・人"],
+["baby","赤ちゃん","家族・人"],
+["people","人々","家族・人"],
+["teacher","先生","家族・人"],
+["student","生徒","家族・人"],
+["name","名前","家族・人"],
+["food","食べ物","食べ物"],
+["fruit","果物","食べ物"],
+["vegetable","野菜","食べ物"],
+["apple","りんご","食べ物"],
+["banana","バナナ","食べ物"],
+["orange","オレンジ","食べ物"],
+["lemon","レモン","食べ物"],
+["strawberry","いちご","食べ物"],
+["peach","もも","食べ物"],
+["grape","ぶどう","食べ物"],
+["melon","メロン","食べ物"],
+["cherry","さくらんぼ","食べ物"],
+["tomato","トマト","食べ物"],
+["potato","じゃがいも","食べ物"],
+["carrot","にんじん","食べ物"],
+["onion","たまねぎ","食べ物"],
+["egg","たまご","食べ物"],
+["bread","パン","食べ物"],
+["rice","ごはん","食べ物"],
+["milk","牛乳","食べ物"],
+["juice","ジュース","食べ物"],
+["water","水","食べ物"],
+["tea","お茶","食べ物"],
+["coffee","コーヒー","食べ物"],
+["cake","ケーキ","食べ物"],
+["cookie","クッキー","食べ物"],
+["candy","あめ","食べ物"],
+["chocolate","チョコレート","食べ物"],
+["ice cream","アイスクリーム","食べ物"],
+["pizza","ピザ","食べ物"],
+["hamburger","ハンバーガー","食べ物"],
+["sandwich","サンドイッチ","食べ物"],
+["salad","サラダ","食べ物"],
+["soup","スープ","食べ物"],
+["curry","カレー","食べ物"],
+["breakfast","朝ごはん","食べ物"],
+["lunch","昼ごはん","食べ物"],
+["dinner","夕ごはん","食べ物"],
+["animal","動物","動物"],
+["dog","犬","動物"],
+["cat","ねこ","動物"],
+["bird","鳥","動物"],
+["fish","魚","動物"],
+["rabbit","うさぎ","動物"],
+["horse","馬","動物"],
+["cow","牛","動物"],
+["pig","ぶた","動物"],
+["sheep","羊","動物"],
+["lion","ライオン","動物"],
+["tiger","トラ","動物"],
+["bear","くま","動物"],
+["elephant","ゾウ","動物"],
+["monkey","サル","動物"],
+["panda","パンダ","動物"],
+["koala","コアラ","動物"],
+["giraffe","キリン","動物"],
+["mouse","ネズミ","動物"],
+["duck","アヒル","動物"],
+["chicken","にわとり","動物"],
+["frog","カエル","動物"],
+["school","学校","学校"],
+["class","クラス","学校"],
+["classroom","教室","学校"],
+["lesson","授業","学校"],
+["book","本","学校"],
+["notebook","ノート","学校"],
+["pen","ペン","学校"],
+["pencil","えんぴつ","学校"],
+["eraser","消しゴム","学校"],
+["ruler","じょうぎ","学校"],
+["desk","机","学校"],
+["chair","いす","学校"],
+["bag","かばん","学校"],
+["English","英語","学校"],
+["Japanese","日本語","学校"],
+["math","算数","学校"],
+["science","理科","学校"],
+["music","音楽","学校"],
+["art","図工","学校"],
+["P.E.","体育","学校"],
+["homework","宿題","学校"],
+["test","テスト","学校"],
+["gym","体育館","学校"],
+["question","質問","学校"],
+["answer","答え","学校"],
+["word","単語","学校"],
+["head","頭","体・服"],
+["face","顔","体・服"],
+["eye","目","体・服"],
+["ear","耳","体・服"],
+["nose","鼻","体・服"],
+["mouth","口","体・服"],
+["hand","手","体・服"],
+["foot","足","体・服"],
+["arm","うで","体・服"],
+["hair","かみの毛","体・服"],
+["tooth","歯","体・服"],
+["shirt","シャツ","体・服"],
+["T-shirt","Tシャツ","体・服"],
+["cap","ぼうし","体・服"],
+["shoes","くつ","体・服"],
+["socks","くつ下","体・服"],
+["jacket","上着","体・服"],
+["skirt","スカート","体・服"],
+["pants","ズボン","体・服"],
+["sweater","セーター","体・服"],
+["house","家","家・もの"],
+["home","(自分の)うち","家・もの"],
+["room","部屋","家・もの"],
+["kitchen","台所","家・もの"],
+["bed","ベッド","家・もの"],
+["table","テーブル","家・もの"],
+["door","ドア","家・もの"],
+["window","窓","家・もの"],
+["clock","時計","家・もの"],
+["cup","カップ","家・もの"],
+["box","箱","家・もの"],
+["bike","自転車","家・もの"],
+["car","車","家・もの"],
+["bus","バス","家・もの"],
+["train","電車","家・もの"],
+["computer","コンピューター","家・もの"],
+["phone","電話","家・もの"],
+["TV","テレビ","家・もの"],
+["camera","カメラ","家・もの"],
+["piano","ピアノ","家・もの"],
+["guitar","ギター","家・もの"],
+["umbrella","かさ","家・もの"],
+["picture","絵","家・もの"],
+["photo","写真","家・もの"],
+["map","地図","家・もの"],
+["key","かぎ","家・もの"],
+["money","お金","家・もの"],
+["bath","おふろ","家・もの"],
+["garden","庭","家・もの"],
+["toy","おもちゃ","家・もの"],
+["park","公園","町・場所"],
+["station","駅","町・場所"],
+["hospital","病院","町・場所"],
+["store","店","町・場所"],
+["restaurant","レストラン","町・場所"],
+["library","図書館","町・場所"],
+["zoo","動物園","町・場所"],
+["city","市","町・場所"],
+["town","町","町・場所"],
+["pool","プール","町・場所"],
+["Japan","日本","町・場所"],
+["sun","太陽","自然・天気"],
+["moon","月","自然・天気"],
+["star","星","自然・天気"],
+["sky","空","自然・天気"],
+["sea","海","自然・天気"],
+["river","川","自然・天気"],
+["mountain","山","自然・天気"],
+["tree","木","自然・天気"],
+["flower","花","自然・天気"],
+["rain","雨","自然・天気"],
+["snow","雪","自然・天気"],
+["weather","天気","自然・天気"],
+["sunny","晴れた","自然・天気"],
+["rainy","雨の","自然・天気"],
+["cloudy","くもりの","自然・天気"],
+["snowy","雪の降る","自然・天気"],
+["windy","風の強い","自然・天気"],
+["hot","暑い","自然・天気"],
+["cold","寒い","自然・天気"],
+["warm","あたたかい","自然・天気"],
+["sport","スポーツ","スポーツ・遊び"],
+["soccer","サッカー","スポーツ・遊び"],
+["baseball","野球","スポーツ・遊び"],
+["basketball","バスケットボール","スポーツ・遊び"],
+["tennis","テニス","スポーツ・遊び"],
+["volleyball","バレーボール","スポーツ・遊び"],
+["table tennis","卓球","スポーツ・遊び"],
+["badminton","バドミントン","スポーツ・遊び"],
+["dodgeball","ドッジボール","スポーツ・遊び"],
+["swimming","水泳","スポーツ・遊び"],
+["ball","ボール","スポーツ・遊び"],
+["game","ゲーム","スポーツ・遊び"],
+["team","チーム","スポーツ・遊び"],
+["go","行く","動詞"],
+["come","来る","動詞"],
+["eat","食べる","動詞"],
+["drink","飲む","動詞"],
+["play","遊ぶ","動詞"],
+["do","する","動詞"],
+["like","好きだ","動詞"],
+["love","大好きだ","動詞"],
+["have","持っている","動詞"],
+["want","ほしい","動詞"],
+["look","見る","動詞"],
+["see","見える","動詞"],
+["watch","(テレビなどを)見る","動詞"],
+["listen","(音楽を)聞く","動詞"],
+["speak","(言葉を)話す","動詞"],
+["talk","話す","動詞"],
+["say","言う","動詞"],
+["read","読む","動詞"],
+["write","書く","動詞"],
+["draw","(絵を)かく","動詞"],
+["study","勉強する","動詞"],
+["run","走る","動詞"],
+["walk","歩く","動詞"],
+["swim","泳ぐ","動詞"],
+["jump","ジャンプする","動詞"],
+["sing","歌う","動詞"],
+["dance","おどる","動詞"],
+["cook","料理する","動詞"],
+["make","作る","動詞"],
+["open","開ける","動詞"],
+["close","閉める","動詞"],
+["sit","すわる","動詞"],
+["stand","立つ","動詞"],
+["sleep","ねむる","動詞"],
+["get up","起きる","動詞"],
+["wash","洗う","動詞"],
+["brush","みがく","動詞"],
+["help","手伝う","動詞"],
+["know","知っている","動詞"],
+["live","住む","動詞"],
+["use","使う","動詞"],
+["ride","乗る","動詞"],
+["stop","止まる","動詞"],
+["clean","そうじする","動詞"],
+["big","大きい","形容詞"],
+["small","小さい","形容詞"],
+["tall","背が高い","形容詞"],
+["long","長い","形容詞"],
+["short","短い","形容詞"],
+["new","新しい","形容詞"],
+["old","古い","形容詞"],
+["young","若い","形容詞"],
+["good","よい","形容詞"],
+["bad","悪い","形容詞"],
+["happy","幸せな","形容詞"],
+["sad","悲しい","形容詞"],
+["hungry","おなかがすいた","形容詞"],
+["tired","つかれた","形容詞"],
+["fine","元気な","形容詞"],
+["busy","いそがしい","形容詞"],
+["beautiful","美しい","形容詞"],
+["pretty","きれいな","形容詞"],
+["cute","かわいい","形容詞"],
+["nice","すてきな","形容詞"],
+["great","すごい","形容詞"],
+["fun","楽しい","形容詞"],
+["cool","かっこいい","形容詞"],
+["fast","速い","形容詞"],
+["many","たくさんの","形容詞"],
+["favorite","お気に入りの","形容詞"],
+["delicious","おいしい","形容詞"],
+["sweet","あまい","形容詞"],
+["kind","親切な","形容詞"],
+["yes","はい","その他"],
+["no","いいえ","その他"],
+["hello","こんにちは","その他"],
+["goodbye","さようなら","その他"],
+["thank you","ありがとう","その他"],
+["please","お願いします","その他"],
+["sorry","ごめんなさい","その他"],
+["excuse me","すみません","その他"],
+["what","何","その他"],
+["who","だれ","その他"],
+["where","どこ","その他"],
+["when","いつ","その他"],
+["how","どうやって","その他"],
+["I","私","その他"],
+["you","あなた","その他"],
+["he","彼","その他"],
+["she","彼女","その他"],
+["we","私たち","その他"],
+["they","彼ら","その他"],
+["it","それ","その他"],
+["this","これ","その他"],
+["that","あれ","その他"],
+["here","ここ","その他"],
+["there","そこ","その他"],
+["very","とても","その他"],
+["too","～も","その他"],
+["and","～と","その他"],
+["but","でも","その他"],
+["with","～といっしょに","その他"],
+["in","～の中に","その他"],
+["on","～の上に","その他"],
+["under","～の下に","その他"],
+["from","～から","その他"],
+["to","～へ","その他"],
+["every","毎～","その他"],
+["always","いつも","その他"],
+["usually","ふだんは","その他"],
+["sometimes","ときどき","その他"]
+];
+const W4=[
+["buy","買う","動詞"],
+["bring","持ってくる","動詞"],
+["take","持っていく","動詞"],
+["forget","忘れる","動詞"],
+["remember","覚えている","動詞"],
+["give","あげる","動詞"],
+["get","手に入れる","動詞"],
+["put","置く","動詞"],
+["find","見つける","動詞"],
+["lose","なくす","動詞"],
+["leave","出発する","動詞"],
+["arrive","着く","動詞"],
+["start","始める","動詞"],
+["finish","終える","動詞"],
+["think","思う","動詞"],
+["understand","理解する","動詞"],
+["hear","聞こえる","動詞"],
+["ask","たずねる","動詞"],
+["tell","伝える","動詞"],
+["teach","教える","動詞"],
+["learn","習う","動詞"],
+["call","電話する","動詞"],
+["send","送る","動詞"],
+["meet","会う","動詞"],
+["visit","訪ねる","動詞"],
+["wait","待つ","動詞"],
+["stay","泊まる","動詞"],
+["travel","旅行する","動詞"],
+["enjoy","楽しむ","動詞"],
+["feel","感じる","動詞"],
+["try","やってみる","動詞"],
+["catch","つかまえる","動詞"],
+["throw","投げる","動詞"],
+["carry","運ぶ","動詞"],
+["sell","売る","動詞"],
+["pay","はらう","動詞"],
+["borrow","借りる","動詞"],
+["lend","貸す","動詞"],
+["change","変える","動詞"],
+["move","引っ越す","動詞"],
+["win","勝つ","動詞"],
+["fly","飛ぶ","動詞"],
+["drive","運転する","動詞"],
+["grow","育てる","動詞"],
+["work","働く","動詞"],
+["need","必要とする","動詞"],
+["hope","望む","動詞"],
+["practice","練習する","動詞"],
+["become","～になる","動詞"],
+["worry","心配する","動詞"],
+["invite","招待する","動詞"],
+["show","見せる","動詞"],
+["smile","ほほえむ","動詞"],
+["laugh","笑う","動詞"],
+["cry","泣く","動詞"],
+["hurry","急ぐ","動詞"],
+["decide","決める","動詞"],
+["return","もどる","動詞"],
+["collect","集める","動詞"],
+["build","建てる","動詞"],
+["break","こわす","動詞"],
+["join","参加する","動詞"],
+["turn","曲がる","動詞"],
+["touch","さわる","動詞"],
+["interesting","おもしろい","形容詞"],
+["easy","かんたんな","形容詞"],
+["difficult","むずかしい","形容詞"],
+["famous","有名な","形容詞"],
+["popular","人気のある","形容詞"],
+["important","大切な","形容詞"],
+["special","特別な","形容詞"],
+["different","ちがう","形容詞"],
+["same","同じ","形容詞"],
+["free","ひまな","形容詞"],
+["sick","病気の","形容詞"],
+["sleepy","ねむい","形容詞"],
+["thirsty","のどがかわいた","形容詞"],
+["full","おなかいっぱいの","形容詞"],
+["heavy","重い","形容詞"],
+["light","軽い","形容詞"],
+["strong","強い","形容詞"],
+["weak","弱い","形容詞"],
+["early","早い","形容詞"],
+["late","(時間が)おそい","形容詞"],
+["slow","(速さが)おそい","形容詞"],
+["cheap","安い","形容詞"],
+["expensive","(値段が)高い","形容詞"],
+["high","(高さが)高い","形容詞"],
+["dark","暗い","形容詞"],
+["quiet","静かな","形容詞"],
+["dirty","よごれた","形容詞"],
+["wonderful","すばらしい","形容詞"],
+["exciting","わくわくする","形容詞"],
+["careful","注意深い","形容詞"],
+["ready","用意ができた","形容詞"],
+["glad","うれしい","形容詞"],
+["angry","おこった","形容詞"],
+["surprised","おどろいた","形容詞"],
+["afraid","こわがって","形容詞"],
+["right","正しい","形容詞"],
+["wrong","まちがった","形容詞"],
+["first","最初の","形容詞"],
+["last","最後の","形容詞"],
+["next","次の","形容詞"],
+["other","ほかの","形容詞"],
+["foreign","外国の","形容詞"],
+["often","よく","その他"],
+["soon","すぐに","その他"],
+["later","あとで","その他"],
+["again","もう一度","その他"],
+["together","いっしょに","その他"],
+["also","～もまた","その他"],
+["really","本当に","その他"],
+["never","決して～ない","その他"],
+["still","まだ","その他"],
+["already","もう","その他"],
+["just","ちょうど","その他"],
+["only","～だけ","その他"],
+["well","上手に","その他"],
+["maybe","たぶん","その他"],
+["someday","いつか","その他"],
+["ago","～前に","その他"],
+["before","～の前に","その他"],
+["after","～のあとに","その他"],
+["about","～について","その他"],
+["or","または","その他"],
+["why","なぜ","その他"],
+["which","どちら","その他"],
+["whose","だれの","その他"],
+["everyone","みんな","その他"],
+["yesterday","昨日","時・曜日・月"],
+["tonight","今夜","時・曜日・月"],
+["hour","1時間","時・曜日・月"],
+["minute","分","時・曜日・月"],
+["noon","正午","時・曜日・月"],
+["weekend","週末","時・曜日・月"],
+["season","季節","時・曜日・月"],
+["holiday","休日","時・曜日・月"],
+["vacation","(長い)休み","時・曜日・月"],
+["future","未来","時・曜日・月"],
+["post office","郵便局","町・場所"],
+["bank","銀行","町・場所"],
+["supermarket","スーパー","町・場所"],
+["bookstore","本屋","町・場所"],
+["museum","博物館","町・場所"],
+["aquarium","水族館","町・場所"],
+["airport","空港","町・場所"],
+["hotel","ホテル","町・場所"],
+["theater","劇場","町・場所"],
+["stadium","競技場","町・場所"],
+["church","教会","町・場所"],
+["temple","寺","町・場所"],
+["shrine","神社","町・場所"],
+["castle","城","町・場所"],
+["bridge","橋","町・場所"],
+["street","通り","町・場所"],
+["road","道","町・場所"],
+["corner","角","町・場所"],
+["building","建物","町・場所"],
+["village","村","町・場所"],
+["country","国","町・場所"],
+["world","世界","町・場所"],
+["beach","浜辺","町・場所"],
+["farm","農場","町・場所"],
+["trip","旅行","町・場所"],
+["ticket","切符","町・場所"],
+["plane","飛行機","町・場所"],
+["ship","船","町・場所"],
+["subway","地下鉄","町・場所"],
+["taxi","タクシー","町・場所"],
+["lake","湖","自然・天気"],
+["island","島","自然・天気"],
+["forest","森","自然・天気"],
+["wind","風","自然・天気"],
+["cloud","雲","自然・天気"],
+["rainbow","にじ","自然・天気"],
+["earth","地球","自然・天気"],
+["stone","石","自然・天気"],
+["leaf","葉","自然・天気"],
+["job","仕事","家族・人"],
+["doctor","医者","家族・人"],
+["nurse","看護師","家族・人"],
+["police officer","警察官","家族・人"],
+["firefighter","消防士","家族・人"],
+["pilot","パイロット","家族・人"],
+["singer","歌手","家族・人"],
+["artist","画家","家族・人"],
+["writer","作家","家族・人"],
+["farmer","農家の人","家族・人"],
+["scientist","科学者","家族・人"],
+["dentist","歯医者","家族・人"],
+["player","選手","家族・人"],
+["driver","運転手","家族・人"],
+["astronaut","宇宙飛行士","家族・人"],
+["baker","パン屋さん","家族・人"],
+["uncle","おじ","家族・人"],
+["aunt","おば","家族・人"],
+["cousin","いとこ","家族・人"],
+["parent","親","家族・人"],
+["son","息子","家族・人"],
+["daughter","娘","家族・人"],
+["classmate","クラスメート","家族・人"],
+["member","メンバー","家族・人"],
+["history","歴史","学校"],
+["subject","教科","学校"],
+["club","クラブ","学校"],
+["contest","コンテスト","学校"],
+["speech","スピーチ","学校"],
+["idea","考え","学校"],
+["story","物語","学校"],
+["dictionary","辞書","学校"],
+["uniform","制服","学校"],
+["junior high school","中学校","学校"],
+["newspaper","新聞","家・もの"],
+["magazine","雑誌","家・もの"],
+["letter","手紙","家・もの"],
+["e-mail","Eメール","家・もの"],
+["present","プレゼント","家・もの"],
+["bottle","びん","家・もの"],
+["glass","コップ","家・もの"],
+["paper","紙","家・もの"],
+["chopsticks","おはし","家・もの"],
+["dish","皿","家・もの"],
+["fork","フォーク","家・もの"],
+["knife","ナイフ","家・もの"],
+["spoon","スプーン","家・もの"],
+["bedroom","寝室","家・もの"],
+["bathroom","浴室","家・もの"],
+["living room","居間","家・もの"],
+["wall","かべ","家・もの"],
+["floor","床","家・もの"],
+["sofa","ソファ","家・もの"],
+["robot","ロボット","家・もの"],
+["meat","肉","食べ物"],
+["sugar","砂糖","食べ物"],
+["salt","塩","食べ物"],
+["butter","バター","食べ物"],
+["cheese","チーズ","食べ物"],
+["noodles","めん","食べ物"],
+["pie","パイ","食べ物"],
+["dessert","デザート","食べ物"],
+["pet","ペット","動物"],
+["dolphin","イルカ","動物"],
+["whale","クジラ","動物"],
+["snake","ヘビ","動物"],
+["turtle","カメ","動物"],
+["penguin","ペンギン","動物"],
+["shoulder","かた","体・服"],
+["finger","指","体・服"],
+["stomach","おなか","体・服"],
+["headache","頭痛","体・服"],
+["coat","コート","体・服"],
+["glasses","めがね","体・服"],
+["hobby","趣味","スポーツ・遊び"],
+["camping","キャンプ","スポーツ・遊び"],
+["hiking","ハイキング","スポーツ・遊び"],
+["fishing","釣り","スポーツ・遊び"],
+["skiing","スキー","スポーツ・遊び"],
+["picnic","ピクニック","スポーツ・遊び"],
+["race","競走","スポーツ・遊び"],
+["match","試合","スポーツ・遊び"],
+["concert","コンサート","スポーツ・遊び"],
+["festival","祭り","スポーツ・遊び"]
+];
+const STN={1:"かんたん",2:"ふつう",3:"むずかしい"};
+const ALL=[];
+[["5",[S5_1,S5_2,S5_3]],["4",[S4_1,S4_2,S4_3]]].forEach(([lv,sets])=>sets.forEach((set,si)=>set.forEach((q,i)=>
+  ALL.push({id:`s${lv}-${si+1}-${i}`,kind:"s",lv,st:si+1,ja:q[0],en:q[1]}))));
+[["5",W5],["4",W4]].forEach(([lv,list])=>list.forEach((w,i)=>
+  ALL.push({id:`w${lv}-${i}`,kind:"w",lv,cat:w[2],en:w[0],ja:w[1]})));
+const byId=Object.fromEntries(ALL.map(q=>[q.id,q]));
+
+const store={
+  get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+};
+let settings=Object.assign({kind:"s",lv:"5",st:"1",mode:"je",n:10},store.get("eiken-settings",{}));
+if(!STN[settings.st]&&settings.st!=="mix")settings.st="1";
+let weak=store.get("eiken-weak",[]).filter(id=>byId[id]);
+let log=store.get("eiken-log",[]);          // 1回ごとの練習記録
+let stats=store.get("eiken-stats",{});      // 問題ごとの ○回数・△×回数・最後にまちがえた日
+let stickers=store.get("eiken-stickers",[]);
+let run=null, calMonth=null, recTab="cal", view="home";
+
+/* ---- スプレッドシートに保存（合言葉ごと） ---- */
+const API_URL="https://script.google.com/macros/s/AKfycbyS1oORtcQ57bNaRWuSuMupDtxEYR6bDpw51cpsfg7UuiXbAQthCJmnAHnBwFZnDLsQ/exec";
+const inGas=typeof google!=="undefined"&&google.script&&google.script.run;
+const hasGas=inGas||!!API_URL;
+let me={name:store.get("eiken-pass",null)};
+let queue=[], flushing=false, flushTimer=null, sync=hasGas?"loading":"local";
+const K=k=>"eiken-"+k+"-"+(me.name||"");
+function api(fn,...a){
+  return new Promise((res,rej)=>{
+    if(inGas)return google.script.run.withSuccessHandler(res).withFailureHandler(rej)[fn](...a);
+    fetch(API_URL,{method:"POST",credentials:"omit",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({fn,args:a})})
+      .then(r=>r.json()).then(j=>j.ok?res(j.result):rej(new Error(j.error))).catch(rej);
+  });
+}
+function loadCache(){
+  stats=store.get(K("stats"),{});weak=store.get(K("weak"),[]).filter(id=>byId[id]);
+  log=store.get(K("log"),[]);stickers=store.get(K("stickers"),[]);queue=store.get(K("queue"),[]);
+}
+function cache(){
+  store.set(K("stats"),stats);store.set(K("weak"),weak);store.set(K("log"),log);
+  store.set(K("stickers"),stickers);store.set(K("queue"),queue);
+}
+function enqueue(op){queue.push(op);cache();clearTimeout(flushTimer);flushTimer=setTimeout(flush,700)}
+async function flush(){
+  if(flushing||!queue.length||!hasGas)return;
+  flushing=true;
+  const batch=queue.slice();
+  try{await api("apply",me.name,batch);queue=queue.slice(batch.length);sync="cloud"}
+  catch(e){sync="offline"}
+  cache();flushing=false;
+  if(queue.length&&sync==="cloud")flush();
+  refresh();
+}
+async function pull(){
+  if(!hasGas||!me.name)return;
+  sync="loading";refresh();
+  await flush();
+  if(queue.length){refresh();return}
+  try{
+    const r=await api("loadAll",me.name);
+    stats=r.stats||{};weak=(r.weak||[]).filter(id=>byId[id]);
+    stickers=r.stickers||[];log=(r.log||[]).sort((a,b)=>a.t-b.t);
+    sync="cloud";cache();
+  }catch(e){
+    if(String(e&&e.message).includes("合言葉")){store.set("eiken-pass",null);me.name=null;return passScreen("合言葉がちがいます。もう一度入れてください。")}
+    sync="offline";
+  }
+  refresh();
+}
+function refresh(){
+  if(view==="home")home(true);
+  else if(view==="records")records(undefined,true);
+}
+function syncNote(){
+  return {cloud:"記録はスプレッドシートに保存しています。どのスマホでも同じ記録です。",
+    loading:"記録を読みこんでいます…",
+    offline:"いまはつながらないので、記録をこのスマホにためています。つながったら自動で送ります。",
+    local:"記録はこのスマホの中に保存しています。"}[sync];
+}
+function passScreen(msg){
+  view="pass";run=null;
+  app.innerHTML=`
+  <div><h1><span class="ribbon">🎀</span> 英検 口頭カード</h1>
+  <p class="lead">合言葉を入れてね。合言葉ごとに、べつべつの記録になります。</p></div>
+  <form class="card group" id="passForm">
+    <label class="label" for="pass">合言葉</label>
+    <input id="pass" autocomplete="off" autocapitalize="off" enterkeyhint="go"
+      style="font:inherit;font-size:22px;font-weight:700;padding:12px 16px;border-radius:16px;border:2px solid var(--line);background:var(--paper);color:var(--ink);width:100%;box-sizing:border-box">
+    <p class="note" id="passMsg" style="color:var(--ng);font-weight:700">${msg?esc(msg):""}</p>
+    <button class="btn" type="submit">はじめる</button>
+  </form>`;
+  const f=document.getElementById("passForm"),inp=document.getElementById("pass"),m=document.getElementById("passMsg");
+  f.onsubmit=async ev=>{
+    ev.preventDefault();
+    const v=inp.value.trim();if(!v)return;
+    m.textContent="たしかめています…";m.style.color="var(--sub)";
+    try{ if(hasGas)await api("login",v); }
+    catch(e){m.textContent="合言葉がちがいます。";m.style.color="var(--ng)";return}
+    me.name=v;store.set("eiken-pass",v);loadCache();home();pull();
+  };
+  setTimeout(()=>inp.focus(),50);
+}
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&me.name&&!run)pull()});
+function boot(){if(!me.name)return passScreen();loadCache();home();pull()}
+
+const STK=["🍓","🐰","🌸","🎀","🦄","🍰","🐱","🌈","🍭","🐼","🦋","🌷","🍩","🐣","🍒","🐶","🧁","🐹","🌻","🍑","🐨","🎈","🍦","🦢"];
+const RARE=["👑","💎","🌟","🦄","🎀","💖"];
+
+const pad=n=>String(n).padStart(2,"0");
+const dstr=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const today=()=>dstr(new Date());
+const md=s=>{const [,m,d]=s.split("-");return `${+m}/${+d}`};
+
+/* ---- 読み上げ ---- */
+let voices={};
+function pickVoices(){
+  if(!("speechSynthesis" in window))return;
+  const vs=speechSynthesis.getVoices();
+  const en=vs.filter(v=>/^en[-_]US/i.test(v.lang));
+  voices.en=en.find(v=>/Samantha/i.test(v.name))||en.find(v=>v.localService)||en[0]||vs.find(v=>/^en/i.test(v.lang));
+  const ja=vs.filter(v=>/^ja/i.test(v.lang));
+  voices.ja=ja.find(v=>/Kyoko/i.test(v.name))||ja[0];
+}
+if("speechSynthesis" in window){pickVoices();speechSynthesis.onvoiceschanged=pickVoices}
+function speak(text,lang,slow){
+  if(!("speechSynthesis" in window))return;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang=lang==="en"?"en-US":"ja-JP";
+  if(voices[lang])u.voice=voices[lang];
+  u.rate=slow?0.6:(lang==="en"?0.9:1);
+  speechSynthesis.speak(u);
+}
+const canSpeak="speechSynthesis" in window;
+const calm=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---- 花丸 ---- */
+function hanamaru(size=80){
+  const c=50,R=33,N=9;let p="";
+  for(let i=0;i<=N;i++){
+    const a=-Math.PI/2+i*2*Math.PI/N,x=(c+R*Math.cos(a)).toFixed(1),y=(c+R*Math.sin(a)).toFixed(1);
+    p+=i?` A11 11 0 0 1 ${x} ${y}`:`M${x} ${y}`;
+  }
+  let s="";
+  for(let t=0;t<=4.2*Math.PI;t+=0.25){const r=2+t*1.55;s+=`${t?"L":"M"}${(c+r*Math.cos(t)).toFixed(1)} ${(c+r*Math.sin(t)).toFixed(1)} `}
+  return `<svg class="hana" width="${size}" height="${size}" viewBox="0 0 100 100" aria-hidden="true" fill="none" stroke="var(--hana)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><path d="${p}"/><path d="${s}"/></svg>`;
+}
+
+/* ---- 演出 ---- */
+function burst(el){
+  if(calm||!el)return;
+  const r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+  const ch=["♥","✦","♥","★","♡"];
+  for(let i=0;i<14;i++){
+    const s=document.createElement("span");s.className="pt";s.textContent=ch[i%ch.length];
+    const a=Math.random()*Math.PI*2,d=60+Math.random()*90;
+    s.style.left=cx+"px";s.style.top=cy+"px";
+    s.style.setProperty("--dx",Math.cos(a)*d+"px");s.style.setProperty("--dy",Math.sin(a)*d-40+"px");
+    s.style.setProperty("--r",(Math.random()*360-180)+"deg");
+    if(i%3===1)s.style.color="var(--gold)";
+    document.body.appendChild(s);setTimeout(()=>s.remove(),950);
+  }
+}
+function toast(text){
+  document.querySelectorAll(".toast").forEach(t=>t.remove());
+  const t=document.createElement("div");t.className="toast";t.textContent=text;
+  document.body.appendChild(t);setTimeout(()=>t.remove(),1250);
+}
+
+/* ---- 共通 ---- */
+const app=document.getElementById("app");
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function spkBtn(text,lang,label,cls=""){
+  return `<button class="spk ${cls}" data-say="${esc(text)}" data-lang="${lang}" data-slow="${label.includes("ゆっくり")?1:0}">${SPK}${label}</button>`;
+}
+function bindSpk(){app.querySelectorAll("[data-say]").forEach(b=>b.onclick=()=>speak(b.dataset.say,b.dataset.lang,b.dataset.slow==="1"))}
+function pool(){
+  return ALL.filter(q=>q.kind===settings.kind
+    &&(settings.lv==="mix"||q.lv===settings.lv)
+    &&(settings.kind==="w"||settings.st==="mix"||String(q.st)===settings.st));
+}
+function tags(q){return [q.lv+"級",q.kind==="s"?STN[q.st]:q.cat]}
+function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function practiceDays(){return new Set(log.map(e=>e.d))}
+function streak(){
+  const days=practiceDays();const d=new Date();
+  if(!days.has(dstr(d)))d.setDate(d.getDate()-1);
+  let n=0;while(days.has(dstr(d))){n++;d.setDate(d.getDate()-1)}
+  return n;
+}
+function sessionLabel(e){
+  if(e.src==="weak")return `${e.kind==="w"?"単語":"例文"} にがて`;
+  if(e.src==="miss")return "まちがえた問題";
+  const lv=e.lv==="mix"?"5・4級":e.lv+"級";
+  return e.kind==="w"?`単語 ${lv}`:`例文 ${lv} ${e.st==="mix"?"まぜる":STN[e.st]}`;
+}
+
+/* ---- さいしょの画面 ---- */
+function home(keep){
+  run=null;view="home";
+  const isW=settings.kind==="w";
+  const seg=(key,opts,cls="")=>`<div class="seg ${cls}">${opts.map(([v,t,s])=>`<button data-set="${key}" data-val="${v}" aria-pressed="${String(settings[key])===String(v)}">${t}${s?`<small>${s}</small>`:""}</button>`).join("")}</div>`;
+  const weakN=weak.filter(id=>byId[id].kind===settings.kind).length;
+  app.innerHTML=`
+  <div class="top" style="align-items:flex-start">
+    <div><h1><span class="ribbon">🎀</span> 英検 口頭カード</h1>
+    <p class="lead">おうちの人が問題を読んで、口で答えてね。</p></div>
+    <div class="group" style="gap:6px;align-items:flex-end"><button class="pill" id="rec">きろく</button><button class="back" id="who">${esc(me.name||"")} ▸ きりかえ</button></div>
+  </div>
+  <div class="status"><span>れんぞく <b>${streak()}</b> 日</span><span>シール <b>${stickers.length}</b> まい</span><span>きょう <b>${log.filter(e=>e.d===today()).length}</b> 回</span></div>
+  ${seg("kind",[["s","例文"],["w","単語"]],"two")}
+  <div class="card group">
+    <div class="label">級</div>
+    ${seg("lv",[["5","5級"],["4","4級"],["mix","まぜる","5級＋4級"]])}
+    ${isW?"":`<div class="label" style="margin-top:8px">レベル</div>
+    ${seg("st",[["1","かんたん","短い文"],["2","ふつう","〜しない・〜できる など"],["3","むずかしい","疑問文"],["mix","まぜる","3つ全部"]],"two")}`}
+    <div class="label" style="margin-top:8px">やり方</div>
+    ${seg("mode",[["je","日本語 → 英語",isW?"意味を聞いて英単語を言う":"日本語を聞いて英語で言う"],["ej","英語 → 日本語",isW?"英単語を聞いて意味を言う":"英語を聞いて日本語で言う"]],"two")}
+    <div class="label" style="margin-top:8px">問題の数</div>
+    ${seg("n",[[5,"5問"],[10,"10問"],[20,"20問"]])}
+    <p class="note">この組み合わせの問題は全部で${pool().length}問。毎回ランダムに出ます。</p>
+  </div>
+  <button class="btn" id="start">はじめる！</button>
+  <button class="btn ghost" id="weak" ${weakN?"":"disabled"}>にがてな${isW?"単語":"例文"}だけ（${weakN}問）</button>
+  <p class="note">最後までやるとシールが1まいもらえます。全部○ならキラキラのシール！<br>△と×の問題は「にがて」に入り、にがての練習で○をとると消えます。${esc(syncNote())}${canSpeak?"":"<br>この画面では読み上げが使えません。英語はおうちの人が読んでください。"}</p>`;
+  app.querySelectorAll("[data-set]").forEach(b=>b.onclick=()=>{
+    const k=b.dataset.set;settings[k]=k==="n"?Number(b.dataset.val):b.dataset.val;store.set("eiken-settings",settings);home();
+  });
+  document.getElementById("rec").onclick=()=>records();
+  document.getElementById("who").onclick=()=>{store.set("eiken-pass",null);me.name=null;passScreen()};
+  document.getElementById("start").onclick=()=>start(shuffle(pool()).slice(0,settings.n),"normal");
+  document.getElementById("weak").onclick=()=>start(shuffle(weak.filter(id=>byId[id].kind===settings.kind).map(id=>byId[id])).slice(0,20),"weak");
+  if(!keep)window.scrollTo(0,0);
+}
+
+/* ---- 問題 ---- */
+function start(list,src){
+  if(!list.length)return;
+  view="quiz";
+  run={list,i:0,res:[],src,mode:settings.mode,shown:false,showEn:false,combo:0,best:0,saved:false,
+       meta:{kind:list[0].kind,lv:settings.lv,st:settings.st}};
+  question();
+}
+
+function question(){
+  const q=run.list[run.i],n=run.list.length,je=run.mode==="je",isW=q.kind==="w";
+  const jaCls=isW?'class="ja" style="font-size:36px"':'class="ja"';
+  const enCls=isW?'class="en" style="font-size:40px"':'class="en"';
+  const prompt=je
+    ? `<p class="say">おうちの人が読んでください</p><p ${jaCls}>${esc(q.ja)}</p>
+       <div class="row" style="margin-top:10px">${canSpeak?spkBtn(q.ja,"ja","日本語を流す"):""}</div>`
+    : `<p class="say">英語を流して、日本語で答えてもらいます</p>
+       ${canSpeak?`<div class="row">${spkBtn(q.en,"en","英語を流す","big")}${spkBtn(q.en,"en","ゆっくり")}</div>`:""}
+       <div style="margin-top:12px">${run.showEn||!canSpeak?`<p ${enCls}>${esc(q.en)}</p>`:`<button class="back" id="showEn" style="color:var(--accent-deep)">英語を見る（おうちの人が読むとき）</button>`}</div>`;
+  const ans=!run.shown?"":je
+    ? `<div class="answer"><div class="label">答え</div><p ${enCls}>${esc(q.en)}</p>
+       ${canSpeak?`<div class="row">${spkBtn(q.en,"en","英語を聞く")}${spkBtn(q.en,"en","ゆっくり")}</div>`:""}</div>`
+    : `<div class="answer"><div class="label">答え</div>${run.showEn||!canSpeak?"":`<p ${enCls}>${esc(q.en)}</p>`}<p class="ja" style="font-size:${isW?30:21}px">${esc(q.ja)}</p></div>`;
+  app.innerHTML=`
+  <div class="top"><button class="back" id="quit">← やめる</button><span class="prog">${run.i+1} / ${n}</span></div>
+  <div class="bar"><i style="width:${run.i/n*100}%"></i></div>
+  <p class="combo">${run.combo>=2?`♥ ${run.combo}れんぞく○ ♥`:""}</p>
+  <div class="card">
+    <div class="tagline">${tags(q).map(t=>`<span class="chip">${esc(t)}</span>`).join("")}<span class="chip">${je?"日本語 → 英語":"英語 → 日本語"}</span>${run.src==="weak"?'<span class="chip">にがて</span>':""}</div>
+    ${prompt}${ans}
+  </div>
+  ${run.shown
+    ? `<div class="judge">
+        <button class="j-ok" data-j="ok"><b>○</b><span>できた</span></button>
+        <button class="j-mid" data-j="mid"><b>△</b><span>おしい</span></button>
+        <button class="j-ng" data-j="ng"><b>×</b><span>もう一回</span></button></div>
+       <p class="hint">${isW?"意味が合っていれば、ちがう言い方でも○でOKです。":"言い方が少しちがっても、意味が合っていれば○でOKです。"}</p>`
+    : `<button class="btn" id="reveal">答えを見る</button>`}`;
+  bindSpk();
+  document.getElementById("quit").onclick=()=>run.res.length?result(false):home();
+  const se=document.getElementById("showEn");if(se)se.onclick=()=>{run.showEn=true;question()};
+  const rv=document.getElementById("reveal");if(rv)rv.onclick=()=>{run.shown=true;question()};
+  app.querySelectorAll("[data-j]").forEach(b=>b.onclick=()=>judge(b.dataset.j,b));
+  window.scrollTo(0,0);
+}
+
+function judge(j,btn){
+  const q=run.list[run.i],t=today();
+  run.res.push({id:q.id,j});
+  const s=stats[q.id]||{c:0,w:0};
+  if(j==="ok"){
+    s.c++;run.combo++;run.best=Math.max(run.best,run.combo);
+    burst(btn);
+    if(run.combo>=3)toast(`${run.combo}れんぞく！`);
+    if(run.src==="weak")weak=weak.filter(x=>x!==q.id);
+  }else{
+    s.w++;s.lw=t;run.combo=0;
+    if(!weak.includes(q.id))weak.push(q.id);
+  }
+  stats[q.id]=s;
+  enqueue({type:"judge",id:q.id,kind:q.kind,ja:q.ja,en:q.en,ok:j==="ok",d:t,weak:weak.includes(q.id)});
+  run.i++;run.shown=false;run.showEn=false;
+  if(canSpeak)speechSynthesis.cancel();
+  run.i<run.list.length?question():result(true);
+}
+
+/* ---- けっか ---- */
+function result(done){
+  const ok=run.res.filter(r=>r.j==="ok").length,n=run.res.length;
+  const miss=run.res.filter(r=>r.j!=="ok");
+  let got=null;
+  view="result";
+  if(!run.saved){
+    run.saved=true;
+    const entry={d:today(),t:Date.now(),kind:run.meta.kind,lv:run.meta.lv,st:run.meta.st,mode:run.mode,src:run.src,n,ok};
+    log.push(entry);
+    if(done&&n>=5){
+      const rare=ok===n;
+      got={e:(rare?RARE:STK)[Math.floor(Math.random()*(rare?RARE:STK).length)],rare,d:today()};
+      stickers.push(got);
+    }
+    enqueue({type:"session",entry,label:sessionLabel(entry),sticker:got});
+  }
+  const r=ok/n;
+  const praise=r===1?"天才！":r>=0.8?"すごい！":r>=0.6?"よくできました":"がんばったね";
+  app.innerHTML=`
+  <div class="card" style="text-align:center">
+    ${r>=0.6?hanamaru(110):""}
+    <p class="praise">${praise}</p>
+    <div class="score">${ok}<small> / ${n}</small></div>
+    ${run.best>=3?`<p class="note">さいこう ${run.best}れんぞく○</p>`:""}
+  </div>
+  ${got?`<div class="card" style="text-align:center"><div class="label">${got.rare?"キラキラシールをゲット！":"シールをゲット！"}</div>
+    <div class="sticker big ${got.rare?"rare":""}" style="margin-top:10px">${got.e}</div>
+    <p class="note" style="margin-top:10px">シール帳に ${stickers.length} まいめ</p></div>`:""}
+  ${miss.length?`<div class="card group"><div class="label">△・×だった問題</div><ul class="list">
+    ${miss.map(r=>{const q=byId[r.id];return `<li><span><span class="m ${r.j==="mid"?"j-mid":"j-ng"}">${r.j==="mid"?"△":"×"}</span>${esc(q.ja)}</span>
+      <span class="row"><span class="e">${esc(q.en)}</span>${canSpeak?spkBtn(q.en,"en","聞く"):""}</span></li>`}).join("")}
+  </ul></div>
+  <button class="btn" id="again">△・×だった問題をもう一回</button>`:""}
+  <button class="btn ghost" id="home">さいしょの画面へ</button>`;
+  bindSpk();
+  if(r===1&&!calm)setTimeout(()=>burst(app.querySelector(".score")),200);
+  const a=document.getElementById("again");
+  if(a)a.onclick=()=>start(shuffle(miss.map(r=>byId[r.id])),run.src==="weak"?"weak":"miss");
+  document.getElementById("home").onclick=home;
+  window.scrollTo(0,0);
+}
+
+/* ---- きろく ---- */
+function records(tab,keep){
+  if(tab)recTab=tab;view="records";
+  const tabs=[["cal","カレンダー"],["stk","シール"],["score","せいせき"],["miss","まちがい"]];
+  let body="";
+  if(recTab==="cal")body=calView();
+  if(recTab==="stk")body=stickerView();
+  if(recTab==="score")body=scoreView();
+  if(recTab==="miss")body=missView();
+  app.innerHTML=`
+  <div class="top"><button class="back" id="back">← もどる</button><h2>きろく</h2><span style="width:48px"></span></div>
+  <div class="seg four">${tabs.map(([k,t])=>`<button data-tab="${k}" aria-pressed="${recTab===k}">${t}</button>`).join("")}</div>
+  ${body}`;
+  document.getElementById("back").onclick=home;
+  app.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>records(b.dataset.tab));
+  app.querySelectorAll("[data-cal]").forEach(b=>b.onclick=()=>{calMonth.setMonth(calMonth.getMonth()+Number(b.dataset.cal));records()});
+  const pm=document.getElementById("practiceMiss");
+  if(pm)pm.onclick=()=>start(shuffle(missItems()).slice(0,20),"miss");
+  bindSpk();
+}
+
+function calView(){
+  if(!calMonth){calMonth=new Date();calMonth.setDate(1)}
+  const y=calMonth.getFullYear(),m=calMonth.getMonth();
+  const days=practiceDays(),cnt={};log.forEach(e=>cnt[e.d]=(cnt[e.d]||0)+1);
+  const first=new Date(y,m,1).getDay(),last=new Date(y,m+1,0).getDate(),t=today();
+  let cells=["日","月","火","水","木","金","土"].map(w=>`<div class="wd">${w}</div>`).join("");
+  for(let i=0;i<first;i++)cells+="<div></div>";
+  for(let d=1;d<=last;d++){
+    const k=`${y}-${pad(m+1)}-${pad(d)}`,has=days.has(k);
+    cells+=`<div class="d ${has?"has":""} ${k===t?"today":""}" ${has?`aria-label="${d}日 ${cnt[k]}回練習"`:""}>${has?hanamaru():""}<span>${d}</span></div>`;
+  }
+  const monthDays=[...days].filter(k=>k.startsWith(`${y}-${pad(m+1)}`)).length;
+  return `
+  <div class="big-num"><div><b>${streak()}</b><span>れんぞく日数</span></div><div><b>${days.size}</b><span>ぜんぶの日数</span></div><div><b>${monthDays}</b><span>${m+1}月の日数</span></div></div>
+  <div class="card group">
+    <div class="top"><button class="pill" data-cal="-1" aria-label="前の月">‹</button><h2 style="font-family:var(--en)">${y}年 ${m+1}月</h2><button class="pill" data-cal="1" aria-label="次の月">›</button></div>
+    <div class="cal">${cells}</div>
+    <p class="note">練習した日に花丸がつきます。</p>
+  </div>`;
+}
+
+function stickerView(){
+  const slots=Math.max(20,Math.ceil((stickers.length+1)/20)*20);
+  let g="";
+  for(let i=0;i<slots;i++){const s=stickers[i];g+=s?`<div class="sticker ${s.rare?"rare":""}" title="${md(s.d)}">${s.e}</div>`:`<div class="sticker empty"></div>`}
+  const rare=stickers.filter(s=>s.rare).length;
+  return `
+  <div class="big-num"><div><b>${stickers.length}</b><span>シール</span></div><div><b>${rare}</b><span>キラキラ</span></div></div>
+  <div class="card group"><div class="sgrid">${g}</div>
+  <p class="note">5問以上を最後までやると1まい。全部○ならキラキラシール。</p></div>`;
+}
+
+function scoreView(){
+  if(!log.length)return `<div class="card"><p class="note">まだ記録がありません。練習すると、ここに点数が出ます。</p></div>`;
+  const sorted=[...log].sort((a,b)=>a.t-b.t),recent=sorted.slice(-14);
+  const W=320,H=150,L=30,B=22,T=12,bw=(W-L-6)/14;
+  let svg=`<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="さいきんの正解の割合">`;
+  [0,50,100].forEach(v=>{const yy=T+(H-T-B)*(1-v/100);svg+=`<line x1="${L}" x2="${W-4}" y1="${yy}" y2="${yy}" stroke="var(--line)" stroke-width="1"/><text x="${L-6}" y="${yy+4}" text-anchor="end" font-size="10" fill="var(--sub)">${v}%</text>`});
+  recent.forEach((e,i)=>{
+    const p=e.ok/e.n,h=(H-T-B)*p,x=L+4+i*bw,yy=H-B-h;
+    svg+=`<rect x="${x}" y="${yy}" width="${bw-6}" height="${Math.max(h,1.5)}" rx="4" fill="${p===1?"var(--hana)":"var(--accent)"}" opacity="${p===1?1:.75}"/>`;
+    svg+=`<text x="${x+(bw-6)/2}" y="${H-7}" text-anchor="middle" font-size="9" fill="var(--sub)">${md(e.d)}</text>`;
+  });
+  svg+="</svg>";
+  const groups={};
+  Object.entries(stats).forEach(([id,s])=>{const q=byId[id];if(!q)return;
+    const k=q.kind==="w"?`単語 ${q.lv}級`:`例文 ${q.lv}級 ${STN[q.st]}`;
+    const g=groups[k]||(groups[k]={c:0,t:0});g.c+=s.c;g.t+=s.c+s.w});
+  const order=["例文 5級 かんたん","例文 5級 ふつう","例文 5級 むずかしい","例文 4級 かんたん","例文 4級 ふつう","例文 4級 むずかしい","単語 5級","単語 4級"];
+  const rows=order.filter(k=>groups[k]).map(k=>{const g=groups[k],p=Math.round(g.c/g.t*100);
+    return `<tr><td>${k}<div class="meter"><i style="width:${p}%"></i></div></td><td>${p}%<br><span class="note">${g.c}/${g.t}</span></td></tr>`}).join("");
+  const list=sorted.reverse().slice(0,40).map(e=>`<li><span style="display:flex;justify-content:space-between;gap:8px"><span>${sessionLabel(e)}</span><b style="font-family:var(--en)">${e.ok}/${e.n}</b></span>
+    <span class="meta"><span>${md(e.d)}</span><span>${e.mode==="je"?"日本語 → 英語":"英語 → 日本語"}</span>${e.ok===e.n?"<span>全部○</span>":""}</span></li>`).join("");
+  return `
+  <div class="card group"><div class="label">さいきんの正解の割合（最大14回）</div>${svg}</div>
+  <div class="card group"><div class="label">レベルごとの正解の割合</div><table class="acc">${rows}</table></div>
+  <div class="card group"><div class="label">練習のきろく（新しい順）</div><ul class="list">${list}</ul></div>`;
+}
+
+function missItems(){
+  return Object.entries(stats).filter(([id,s])=>s.w>0&&byId[id])
+    .sort((a,b)=>b[1].w-a[1].w||String(b[1].lw).localeCompare(String(a[1].lw))).map(([id])=>byId[id]);
+}
+function missView(){
+  const items=missItems();
+  if(!items.length)return `<div class="card"><p class="note">まだまちがえた問題はありません。△か×をつけると、ここに残ります。</p></div>`;
+  const li=items.slice(0,100).map(q=>{const s=stats[q.id];return `<li>
+    <span>${esc(q.ja)}</span>
+    <span class="row"><span class="e">${esc(q.en)}</span>${canSpeak?spkBtn(q.en,"en","聞く"):""}</span>
+    <span class="meta"><span class="j-ng" style="font-weight:900">まちがい ${s.w}回</span><span>○ ${s.c}回</span><span>さいご ${md(s.lw)}</span><span>${tags(q).join("・")}</span></span></li>`}).join("");
+  return `
+  <button class="btn" id="practiceMiss">まちがいが多い順に練習（20問）</button>
+  <div class="card group"><div class="label">まちがえた問題（多い順・${items.length}問）</div><ul class="list">${li}</ul>
+  <p class="note">「にがて」とちがい、○をとってもここからは消えません。何回まちがえたかが残ります。</p></div>`;
+}
+
+boot();
+</script>
+</body></html>
