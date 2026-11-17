@@ -1217,7 +1217,9 @@ function pickVoices(){
 if("speechSynthesis" in window){pickVoices();speechSynthesis.onvoiceschanged=pickVoices}
 function speak(text,lang,slow){
   if(!("speechSynthesis" in window))return;
-  speechSynthesis.cancel();
+  if(speechSynthesis.speaking||speechSynthesis.pending)speechSynthesis.cancel();
+  speechSynthesis.resume();
+  if(!voices.en||!voices.ja)pickVoices();
   const u=new SpeechSynthesisUtterance(text);
   u.lang=lang==="en"?"en-US":"ja-JP";
   if(voices[lang])u.voice=voices[lang];
